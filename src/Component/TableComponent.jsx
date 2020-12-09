@@ -1,5 +1,6 @@
 import { map } from "lodash";
 import React from "react";
+import PropTypes from "prop-types";
 import {
   StyledThead,
   StyledTbody,
@@ -8,6 +9,7 @@ import {
   Styledth,
   Styledtable,
 } from "./TableComponent.styles";
+
 export const TableComponent = ({ data, columns }) => {
   return (
     <Styledtable>
@@ -29,4 +31,13 @@ export const TableComponent = ({ data, columns }) => {
       </StyledTbody>
     </Styledtable>
   );
+};
+
+TableComponent.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape()),
+  columns: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+};
+
+TableComponent.defaultProps = {
+  columns: [],
 };

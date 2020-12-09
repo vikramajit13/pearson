@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import {
   Styledselect,
   Searchdiv,
@@ -41,78 +41,90 @@ export const CountriesContainer = () => {
   useEffect(() => {
     const filterData = filterCityMonth(allFilteredData, city, month);
     setFilteredData(filterData);
-  }, [city, month]);
+  }, [city, month, allFilteredData]);
 
-  const tableOneColumns = useMemo(() => [
-    {
-      title: "Country",
-      id: "country",
-    },
-    { title: "City", id: "city" },
-    {
-      title: "Month",
-      id: "month",
-    },
-    {
-      title: "Average Temp",
-      id: "avg",
-    },
-  ]);
-  const tableTwoColumns = useMemo(() => [
-    {
-      title: "Country",
-      id: "country",
-    },
-    { title: "City", id: "city" },
-    {
-      title: "Month",
-      id: "month",
-    },
-    {
-      title: "Year",
-      id: "year",
-    },
-    {
-      title: "Temp",
-      id: "temp",
-    },
-  ]);
+  const tableOneColumns = useMemo(
+    () => [
+      {
+        title: "Country",
+        id: "country",
+      },
+      { title: "City", id: "city" },
+      {
+        title: "Month",
+        id: "month",
+      },
+      {
+        title: "Average Temp",
+        id: "avg",
+      },
+    ],
+    []
+  );
+  const tableTwoColumns = useMemo(
+    () => [
+      {
+        title: "Country",
+        id: "country",
+      },
+      { title: "City", id: "city" },
+      {
+        title: "Month",
+        id: "month",
+      },
+      {
+        title: "Year",
+        id: "year",
+      },
+      {
+        title: "Temp",
+        id: "temp",
+      },
+    ],
+    []
+  );
 
-  const tableThreeColumns = useMemo(() => [
-    {
-      title: "Country",
-      id: "country",
-    },
-    {
-      title: "Year",
-      id: "year",
-    },
-    { title: "Max Temp", id: "maxTemp" },
-    { title: "Min Temp", id: "minTemp" },
-    {
-      title: "Average Temp",
-      id: "avg",
-    },
-  ]);
+  const tableThreeColumns = useMemo(
+    () => [
+      {
+        title: "Country",
+        id: "country",
+      },
+      {
+        title: "Year",
+        id: "year",
+      },
+      { title: "Max Temp", id: "maxTemp" },
+      { title: "Min Temp", id: "minTemp" },
+      {
+        title: "Average Temp",
+        id: "avg",
+      },
+    ],
+    []
+  );
 
-  const handleCitySelect = ({ target }) => {
+  const handleCitySelect = useCallback(({ target }) => {
     const { value } = target;
     setCity(value);
-  };
-  const handleMonthSelect = ({ target }) => {
+  }, []);
+  const handleMonthSelect = useCallback(({ target }) => {
     const { value } = target;
     setMonth(value);
-  };
+  }, []);
 
-  const handleTempSort = ({ target }) => {
-    const { value } = target;
-    if (value) {
-      const sortedData = sortData(allData, value);
-      setSecondTableData(sortedData);
-    } else {
-      setSecondTableData(allData);
-    }
-  };
+  const handleTempSort = useCallback(
+    ({ target }) => {
+      const { value } = target;
+      if (value) {
+        const sortedData = sortData(allData, value);
+        setSecondTableData(sortedData);
+      } else {
+        setSecondTableData(allData);
+      }
+    },
+    [allData]
+  );
 
   return (
     <Styleddiv>
